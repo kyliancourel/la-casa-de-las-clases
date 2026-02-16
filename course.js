@@ -8,22 +8,22 @@ const courseId = params.get('id');
 const course = courses.find(c => c.id === courseId);
 
 // Éléments DOM
-const titleEl = document.getElementById('course-title'); // <h1> du titre
-const contentEl = document.getElementById('course-content'); // conteneur des séances
+const titleEl = document.getElementById('course-title');
+const contentEl = document.getElementById('course-content');
 const backBtn = document.getElementById('back-btn');
 
-// Modal existant
+// Modal existant dans le HTML
 const modal = document.getElementById('modal-message');
 const modalText = document.getElementById('modal-text');
 const modalClose = document.getElementById('modal-close');
 
 if (course) {
-    // ✅ Titre principal : Axe + "Les Séances"
+    // Titre principal : Axe + "Les Séances"
     const axeTitle = course.axe ? course.axe : course.titre;
     titleEl.textContent = `${axeTitle} - Les Séances`;
     document.title = `${axeTitle} - Les Séances`;
 
-    // Bande colorée "Les Séances"
+    // Bande colorée
     const bande = document.createElement('div');
     bande.classList.add('bande-color');
     bande.style.backgroundColor = course.color;
@@ -38,12 +38,10 @@ if (course) {
             const seanceCard = document.createElement('div');
             seanceCard.classList.add('seance-card');
 
-            // Titre de la séance
             const seanceTitle = document.createElement('h4');
             seanceTitle.textContent = seance.titre;
             seanceCard.appendChild(seanceTitle);
 
-            // Liste des fichiers
             if (seance.fichiers && seance.fichiers.length > 0) {
                 const ul = document.createElement('ul');
                 ul.classList.add('seance-files');
@@ -51,7 +49,6 @@ if (course) {
                 seance.fichiers.forEach(f => {
                     const li = document.createElement('li');
 
-                    // Type du fichier
                     const typeTitle = document.createElement('div');
                     typeTitle.textContent = `${f.type}:`;
                     li.appendChild(typeTitle);
@@ -65,7 +62,6 @@ if (course) {
                         const fileDiv = document.createElement('div');
                         fileDiv.classList.add('file-item');
 
-                        // Icône selon extension
                         const ext = f.file.split('.').pop().toLowerCase();
                         const iconSpan = document.createElement('span');
                         iconSpan.classList.add('icon');
@@ -75,18 +71,20 @@ if (course) {
                         else if (ext === 'xls' || ext === 'xlsx') iconSpan.classList.add('icon-xls');
                         else iconSpan.classList.add('icon-unknown');
 
-                        // Lien fichier
                         const fileLink = document.createElement('a');
                         fileLink.href = f.file;
                         fileLink.target = '_blank';
                         fileLink.textContent = f.file.split('/').pop();
-                        fileLink.classList.add('file-link'); // pour styliser via CSS
+                        fileLink.classList.add('file-link');
 
                         if (f.locked) {
                             fileLink.addEventListener('click', e => {
                                 e.preventDefault();
-                                showModal('Ce fichier est verrouillé pour le moment.');
+                                // ⚡ Affiche le modal à la place de alert()
+                                modalText.textContent = 'Ce fichier est verrouillé pour le moment.';
+                                modal.style.display = 'flex';
                             });
+
                             const lockSpan = document.createElement('span');
                             lockSpan.textContent = ' 🔒';
                             lockSpan.classList.add('locked');
@@ -109,17 +107,9 @@ if (course) {
     }
 
     // Bouton retour
-    if (backBtn) {
-        backBtn.addEventListener('click', () => {
-            window.history.back();
-        });
-    }
-}
-
-// --- Modal réutilisable ---
-function showModal(message) {
-    modalText.textContent = message;
-    modal.style.display = 'flex'; // Affiche le modal
+    backBtn.addEventListener('click', () => {
+        window.history.back();
+    });
 }
 
 // Fermeture du modal
