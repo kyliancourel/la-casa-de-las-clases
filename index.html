@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Casa de las Clases</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>La Casa de las Clases</h1>
+        <nav>
+            <button class="filter-btn" data-niveau="Accueil">Accueil</button>
+            <button class="filter-btn" data-niveau="Collège">Collège</button>
+            <button class="filter-btn" data-niveau="Lycée">Lycée</button>
+            <button class="filter-btn" data-niveau="LLCER">LLCER</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="about-site">
+            <h2>À propos de ce site</h2>
+            <p>
+                Bonjour chers parents, chers élèves !
+            </p>
+            <p>Je suis M. Courel et je propose ici les séances faites en classe, et les ressources pédagogiques utilisées.</p>
+            <p>
+                Vous trouverez les cours, les exercices, les fiches à télécharger et les évaluations pour progresser en
+                toute autonomie.
+            </p>
+            <p>
+                Le concept : chaque cours est organisé par axe et par séance, avec tous les fichiers disponibles en un
+                clic.
+            </p>
+        </section>
+        <section id="discovery-world">
+            <h2>Découverte du monde hispanophone</h2>
+            <ul class="discovery-world-links">
+                <li>
+                    <a href="https://www.bbc.com/mundo" target="_blank">BBC Mundo - Actualités internationales</a>
+                    <p>Dernières nouvelles du monde hispanophone, politique et société.</p>
+                </li>
+                <li>
+                    <a href="https://www.rtve.es/noticias/" target="_blank">RTVE Noticias</a>
+                    <p>Articles et reportages en espagnol sur la culture et l’actualité.</p>
+                </li>
+                <li>
+                    <a href="https://elpais.com/" target="_blank">El País</a>
+                    <p>Journal espagnol proposant articles, vidéos et analyses.</p>
+                </li>
+                <li>
+                    <a href="https://www.youtube.com/@vidascontadas.podcast/videos" target="_blank">Vidas Contadas (YouTube)</a>
+                    <p>Poadcast qui invite à grandir et à réfléchir.</p>
+                </li>
+            </ul>
+        </section>
+
+        <div id="courses-container">
+            <!-- Les cours s'affichent ici via JS -->
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 - La Casa de las Clases - M. Courel - Tous droits réservés
+    </footer>
+
+    <script type="module" src="app.js"></script>
+</body>
+
+</html>
