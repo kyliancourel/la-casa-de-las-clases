@@ -1,41 +1,24 @@
 import { courses } from './data.js';
 
+// Récupération de l'ID du cours depuis l'URL
 const params = new URLSearchParams(window.location.search);
 const courseId = params.get('id');
 
+// Recherche du cours
 const course = courses.find(c => c.id === courseId);
 
-const titleEl = document.getElementById('course-title');
-const contentEl = document.getElementById('course-content');
+// Éléments DOM
+const titleEl = document.getElementById('course-title'); // <h1> du titre
+const contentEl = document.getElementById('course-content'); // conteneur des séances
 const backBtn = document.getElementById('back-btn');
 
-// Modal message
+// Modal existant
 const modal = document.getElementById('modal-message');
 const modalText = document.getElementById('modal-text');
 const modalClose = document.getElementById('modal-close');
 
-function showModalMessage(text) {
-    if (!modal || !modalText) return;
-    modalText.textContent = text;
-    modal.style.display = 'flex';
-}
-
-// Fermer le modal au clic sur OK
-if (modalClose) {
-    modalClose.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
-}
-
-// Fermer le modal si on clique en dehors du contenu
-if (modal) {
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.style.display = 'none';
-    });
-}
-
 if (course) {
-    // Titre principal : Axe + "Les Séances"
+    // ✅ Titre principal : Axe + "Les Séances"
     const axeTitle = course.axe ? course.axe : course.titre;
     titleEl.textContent = `${axeTitle} - Les Séances`;
     document.title = `${axeTitle} - Les Séances`;
@@ -44,11 +27,8 @@ if (course) {
     const bande = document.createElement('div');
     bande.classList.add('bande-color');
     bande.style.backgroundColor = course.color;
-
     const bandeTitle = document.createElement('h3');
     bandeTitle.textContent = 'Les Séances';
-    bandeTitle.style.margin = '0';
-    bandeTitle.style.color = '#333';
     bande.appendChild(bandeTitle);
     contentEl.appendChild(bande);
 
@@ -100,14 +80,12 @@ if (course) {
                         fileLink.href = f.file;
                         fileLink.target = '_blank';
                         fileLink.textContent = f.file.split('/').pop();
-                        fileLink.style.textDecoration = 'none';
-                        fileLink.style.color = '#333';
-                        fileLink.style.cursor = 'pointer';
+                        fileLink.classList.add('file-link'); // pour styliser via CSS
 
                         if (f.locked) {
                             fileLink.addEventListener('click', e => {
                                 e.preventDefault();
-                                showModalMessage('Ce fichier est verrouillé pour le moment 🔒');
+                                showModal('Ce fichier est verrouillé pour le moment.');
                             });
                             const lockSpan = document.createElement('span');
                             lockSpan.textContent = ' 🔒';
@@ -137,3 +115,14 @@ if (course) {
         });
     }
 }
+
+// --- Modal réutilisable ---
+function showModal(message) {
+    modalText.textContent = message;
+    modal.style.display = 'flex'; // Affiche le modal
+}
+
+// Fermeture du modal
+modalClose.addEventListener('click', () => {
+    modal.style.display = 'none';
+});
