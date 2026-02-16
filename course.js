@@ -5,15 +5,39 @@ const courseId = params.get('id');
 
 const course = courses.find(c => c.id === courseId);
 
-const titleEl = document.getElementById('course-title'); // <h1> du titre
-const contentEl = document.getElementById('course-content'); // conteneur des séances
+const titleEl = document.getElementById('course-title');
+const contentEl = document.getElementById('course-content');
 const backBtn = document.getElementById('back-btn');
 
+// Modal message
+const modal = document.getElementById('modal-message');
+const modalText = document.getElementById('modal-text');
+const modalClose = document.getElementById('modal-close');
+
+function showModalMessage(text) {
+    if (!modal || !modalText) return;
+    modalText.textContent = text;
+    modal.style.display = 'flex';
+}
+
+// Fermer le modal au clic sur OK
+if (modalClose) {
+    modalClose.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+}
+
+// Fermer le modal si on clique en dehors du contenu
+if (modal) {
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.style.display = 'none';
+    });
+}
+
 if (course) {
-    // ✅ Titre principal : Axe + "Les Séances"
+    // Titre principal : Axe + "Les Séances"
     const axeTitle = course.axe ? course.axe : course.titre;
     titleEl.textContent = `${axeTitle} - Les Séances`;
-    // Mettre aussi le titre de l'onglet
     document.title = `${axeTitle} - Les Séances`;
 
     // Bande colorée "Les Séances"
@@ -83,7 +107,7 @@ if (course) {
                         if (f.locked) {
                             fileLink.addEventListener('click', e => {
                                 e.preventDefault();
-                                alert('Ce fichier est verrouillé pour le moment.');
+                                showModalMessage('Ce fichier est verrouillé pour le moment 🔒');
                             });
                             const lockSpan = document.createElement('span');
                             lockSpan.textContent = ' 🔒';
