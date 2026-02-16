@@ -2,6 +2,9 @@ import { courses } from './data.js';
 
 const container = document.getElementById('courses-container');
 const filterButtons = document.querySelectorAll('.filter-btn');
+const modal = document.getElementById('modal-message');
+const modalText = document.getElementById('modal-text');
+const modalClose = document.getElementById('modal-close');
 
 // Sections d'accueil
 const aboutSection = document.getElementById('about-site');
@@ -32,7 +35,8 @@ function createCard(course, niveau) {
     if (course.locked) {
         card.addEventListener('click', e => {
             e.preventDefault();
-            alert('Ce cours est verrouillé pour le moment.');
+            modalText.textContent = "Ce cours est verrouillé pour le moment.";
+            modal.style.display = 'flec';
         });
     }
 
@@ -175,3 +179,8 @@ if (niveauFromUrl) {
 } else {
     displayCourses('Accueil');
 }
+
+// Fermeture du modal
+modalClose.addEventListener('click', () => {
+    modal.style.display = 'none';
+});
