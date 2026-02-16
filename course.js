@@ -2,15 +2,20 @@ import { courses } from './data.js';
 
 const params = new URLSearchParams(window.location.search);
 const courseId = params.get('id');
-const niveau = params.get('niveau'); // récupère le niveau cliqué auparavant
 
 const course = courses.find(c => c.id === courseId);
 
-const titleEl = document.getElementById('course-title');
-const contentEl = document.getElementById('course-content');
+const titleEl = document.getElementById('course-title'); // <h1> du titre
+const contentEl = document.getElementById('course-content'); // conteneur des séances
 const backBtn = document.getElementById('back-btn');
 
 if (course) {
+    // ✅ Titre principal : Axe + "Les Séances"
+    const axeTitle = course.axe ? course.axe : course.titre;
+    titleEl.textContent = `${axeTitle} - Les Séances`;
+    // Mettre aussi le titre de l'onglet
+    document.title = `${axeTitle} - Les Séances`;
+
     // Bande colorée "Les Séances"
     const bande = document.createElement('div');
     bande.classList.add('bande-color');
@@ -23,13 +28,9 @@ if (course) {
     bande.appendChild(bandeTitle);
     contentEl.appendChild(bande);
 
-    // Titre du cours
-    titleEl.textContent = course.axe ? course.axe : course.titre;
-
     // Séances
     if (course.seances && course.seances.length > 0) {
         course.seances.forEach(seance => {
-            // Vignette
             const seanceCard = document.createElement('div');
             seanceCard.classList.add('seance-card');
 
@@ -38,7 +39,7 @@ if (course) {
             seanceTitle.textContent = seance.titre;
             seanceCard.appendChild(seanceTitle);
 
-            // Fichiers
+            // Liste des fichiers
             if (seance.fichiers && seance.fichiers.length > 0) {
                 const ul = document.createElement('ul');
                 ul.classList.add('seance-files');
@@ -46,8 +47,9 @@ if (course) {
                 seance.fichiers.forEach(f => {
                     const li = document.createElement('li');
 
+                    // Type du fichier
                     const typeTitle = document.createElement('div');
-                    typeTitle.textContent = f.type + ':';
+                    typeTitle.textContent = `${f.type}:`;
                     li.appendChild(typeTitle);
 
                     if (!f.file || f.file === "?") {
@@ -59,6 +61,7 @@ if (course) {
                         const fileDiv = document.createElement('div');
                         fileDiv.classList.add('file-item');
 
+                        // Icône selon extension
                         const ext = f.file.split('.').pop().toLowerCase();
                         const iconSpan = document.createElement('span');
                         iconSpan.classList.add('icon');
@@ -68,12 +71,14 @@ if (course) {
                         else if (ext === 'xls' || ext === 'xlsx') iconSpan.classList.add('icon-xls');
                         else iconSpan.classList.add('icon-unknown');
 
+                        // Lien fichier
                         const fileLink = document.createElement('a');
                         fileLink.href = f.file;
                         fileLink.target = '_blank';
                         fileLink.textContent = f.file.split('/').pop();
                         fileLink.style.textDecoration = 'none';
                         fileLink.style.color = '#333';
+                        fileLink.style.cursor = 'pointer';
 
                         if (f.locked) {
                             fileLink.addEventListener('click', e => {
@@ -101,12 +106,10 @@ if (course) {
         });
     }
 
-    // --- BOUTON RETOUR : renvoie au niveau cliqué ---
-    backBtn.addEventListener('click', () => {
-        if (niveau) {
-            window.location.href = `index.html?niveau=${encodeURIComponent(niveau)}`;
-        } else {
+    // Bouton retour
+    if (backBtn) {
+        backBtn.addEventListener('click', () => {
             window.history.back();
-        }
-    });
+        });
+    }
 }

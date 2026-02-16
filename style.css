@@ -37,6 +37,14 @@ nav button:hover {
   background: #d90000;
 }
 
+/* Logo */
+#site-logo {
+  height: 60px;        /* Hauteur du logo */
+  width: auto;         /* Respecte les proportions */
+  vertical-align: middle; /* Aligne avec le texte */
+  margin-right: 10px;
+}
+
 /* Main container */
 main {
   padding: 1rem;
