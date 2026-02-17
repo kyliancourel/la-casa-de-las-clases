@@ -69,6 +69,8 @@ if (course) {
                         else if (ext === 'ppt' || ext === 'pptx') iconSpan.classList.add('icon-ppt');
                         else if (ext === 'doc' || ext === 'docx') iconSpan.classList.add('icon-word');
                         else if (ext === 'xls' || ext === 'xlsx') iconSpan.classList.add('icon-xls');
+                        else if (ext === 'mp3' || ext === 'mp3') iconSpan.classList.add('icon-audio');
+                        else if (ext === 'mp4' || ext === 'avi' || ext === 'mkv' || ext === 'mp4') iconSpan.classList.add('icon-video');
                         else iconSpan.classList.add('icon-unknown');
 
                         const fileLink = document.createElement('a');
