@@ -36,6 +36,11 @@ function createCard(course, niveau) {
         card.addEventListener('click', e => {
             e.preventDefault();
             modalText.textContent = "Ce cours est actuellement verrouillé, car il n'a pas encore été abordé en classe.";
+
+            // Bloquer le scroll de la page
+            document.body.style.overflow = 'hidden';
+
+            // Afficher le modal avec animation
             modal.style.display = 'flex';
             setTimeout(() => {
                 modal.classList.add('show');
@@ -188,5 +193,8 @@ modalClose.addEventListener('click', () => {
     modal.classList.remove('show');
     setTimeout(() => {
         modal.style.display = 'none';
+
+        // Réactiver le scroll de la page
+        document.body.style.overflow = '';
     }, 250);
 });
