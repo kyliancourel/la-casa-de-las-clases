@@ -35,7 +35,7 @@ function createCard(course, niveau) {
     if (course.locked) {
         card.addEventListener('click', e => {
             e.preventDefault();
-            modalText.textContent = "Ce cours est verrouillé pour le moment.";
+            modalText.textContent = "Ce cours est actuellement verrouillé, car il n'a pas encore été abordé en classe.";
             modal.style.display = 'flex';
         });
     }
