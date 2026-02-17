@@ -37,6 +37,9 @@ function createCard(course, niveau) {
             e.preventDefault();
             modalText.textContent = "Ce cours est actuellement verrouillé, car il n'a pas encore été abordé en classe.";
             modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
         });
     }
 
@@ -182,5 +185,8 @@ if (niveauFromUrl) {
 
 // Fermeture du modal
 modalClose.addEventListener('click', () => {
-    modal.style.display = 'none';
+    modal.classList.remove('show');
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 250);
 });

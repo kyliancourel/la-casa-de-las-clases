@@ -299,6 +299,28 @@ footer {
   background-color: #ddd;
 }
 
+/* --- Animation Modal Fade + Zoom --- */
+.modal-message {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.modal-message.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-message .modal-content {
+  transform: scale(0.85);
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.modal-message.show .modal-content {
+  transform: scale(1);
+  opacity: 1;
+}
 
 /* Titre de la séance */
 .seance-card h4 {
